@@ -1,0 +1,37 @@
+oschreib@farm:~$ sudo su - bio3user
+bio3user@farm:~$ module load bio3
+bio3user@farm:~$ conda create --name popvaebogus python=3.7
+bio3user@farm:~$ source activate popvaebogus
+(popvaebogus) bio3user@farm:~$ git clone https://github.com/cjbattey/popvae.git
+[...]
+(popvaebogus) bio3user@farm:~$ cd popvae
+(popvaebogus) bio3user@farm:~/popvae$ python setup.py install
+(popvaebogus) bio3user@farm:~/popvae$ exit
+logout
+oschreib@farm:~$ sudo su -
+Module slurm/19.05.3 loaded 
+Module openmpi/4.0.1 loaded 
+root@farm:~# mkdir -p /share/apps/modulefiles/hpc/popvaebogus/
+root@farm:~# cat /share/apps/modulefiles/hpc/popvaebogus/2021-01-20
+#%Module1.0
+# 2021-01-21: OW
+# https://github.com/kr-colab/popvae
+module unload bio
+module unload bio3
+module load bio3
+proc ModulesHelp {} {
+    puts stderr "   popVAE fits a variational autoencoder (VAE) to a set of genotypes and outputs the latent space.
+    puts stderr "    https://github.com/kr-colab/popvae"
+}
+module-whatis "popVAE fits a variational autoencoder (VAE) to a set of genotypes and outputs the latent space."
+if [module-info mode load] {
+    puts stderr "popVAE is now installed in a conda environment with the bio3 module.\n"
+    puts stderr "To enter the environment, run:"
+    puts stderr "    source activate popvae\n"
+    puts stderr "when done, run:"
+    puts stderr "    source deactivate "
+}
+root@farm:~# module avail -l|egrep popvae
+popvae/2021-01-20                                           2021/01/20 15:52:16
+popvaebogus/2021-01-20                                      2021/01/20 19:43:09
+root@farm:~# 

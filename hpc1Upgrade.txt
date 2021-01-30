@@ -1,0 +1,29 @@
+oschreib@hpc1:~# /tmp/nodes.pl --drain 2>&1|egrep -i "DOWN|DRAIN"
+oschreib@hpc1:~# /tmp/nodes.pl --up 2>&1|egrep -i "DOWN|DRAIN"
+root@hpc1:~# scontrol show node 2>&1|egrep -i boottime
+
+A)Normal
+/opt/csetools
+#Check ping
+oschreib@hpc1:/$ sudo su -
+root@hpc1:~# ping m5-27
+root@hpc1:~# scontrol update nodename=c5-13 state=drain reason="node and management not reachable"
+root@hpc1:~# ssh c5-27
+root@hpc1:~# scontrol update nodename=c5-27 state=drain reason="No route to host"
+root@hpc1:~# scontrol update nodename=c6-28 state=drain reason="Maintenance"
+
+root@c7-41:~# apt dist-upgrade
+root@c7-41:~# apt autoremove
+#If cannot get tran, upgrade puppet below.
+root@hpc1:~# scontrol update nodename=c8-38 state=drain reason="upgrading puppet"
+nvidia-smi;apt install nvidia-utils-390;apt install nvidia-340      
+apt install cuda cuda-drivers
+root@c7-41:~# apt dist-upgrade
+#reboot only if m7-41 pingable.
+root@c7-41:~# reboot
+root@hpc1:~# while true;do ssh blah;date;sleep 3;done
+root@c7-41:~# puppet agent -t
+root@c7-41:~# logout
+Connection to c7-41 closed.
+root@hpc1:~# scontrol update nodename=$Node state=resume
+
