@@ -1,0 +1,36 @@
+System description system
+/opt/puppetlabs/bin/puppet agent -t --server puppet4.cse.ucdavis.edu
+
+root@g8-13:~# /opt/puppetlabs/bin/puppet facts|egrep bios_version
+C)puppet problem:
+E: Failed to fetch http://cran.us.r-project.org/bin/linux/ubuntu/bionic-cran35/r-doc-html_3.6.3-1bionic_all.deb  Connection failed [IP: 137.208.57.46 80]
+#Trying puppet:
+#Puppet out of date:
+ot@c5-9:~# dpkg -l|egrep puppet
+ii  puppet-agent    1.10.14-1xenial                                 amd64        The Puppet Agent
+#Upgrading:
+wget  --inet4-only http://apt.puppetlabs.com/puppet6-release-bionic.deb
+root@c5-9:~# dpkg -i puppet6-release-bionic.deb
+root@c5-9:~# apt update
+root@c5-9:~# apt install puppet-agent
+root@c5-9:~# dpkg -l|egrep puppet
+ii  puppet-agent    6.19.1-1bionic                                  amd64        The Puppet Agent package contains all of the elements needed to run puppet, including ruby, facter, and hiera.
+root@c6-28:~# puppet agent -t
+#root@c5-9:~# openssl x509 -text -in /etc/puppetlabs/puppet/ssl/certs/ca.pem
+root@g8-13:~# rm -rfv /etc/puppetlabs/puppet/ssl
+root@g8-13:~# rm -rf /opt/puppetlabs/puppet/ssl
+root@g8-13:~# /opt/puppetlabs/bin/puppet agent -t -v
+root@puppet4:~# puppetserver -v
+#root@puppet4:~# systemctl start puppetserver
+root@puppet4:~# puppetserver ca sign --certname=g8-13.hpc1.cse.ucdavis.edu
+root@g8-13:~# /opt/puppetlabs/bin/puppet agent -t -v
+Notice: Run of Puppet configuration client already in progress; skipping  (/opt/puppetlabs/puppet/cache/state/agent_catalog_run.lock exists)
+root@g8-13:~# tail -f /var/log/syslog
+root@c7-41:~# apt dist-upgrade
+
+
+/etc/puppetlabs/code/environments/production/data/common.yaml you will see a key with an array in it:
+ucdhpc::profile::hpcsoftware::apt_packages:
+  - emacs
+  - libgl1-mesa-dev
+/etc/puppetlabs/code/environments/production/modules-local/ucdhpc/manifests/role/compute.pp

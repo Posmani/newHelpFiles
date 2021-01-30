@@ -1,0 +1,16 @@
+cd /share/software/src
+mkdir openfoam
+wget 
+cd OpemFOAM-v2012/bin
+./foamSystenCheck
+
+hpc2:/etc/puppetlabs/code/environments/production/data/common.yaml
+oschreib@hpc2:~/src/armadillo/armadillo-10.2.0$ #rm -v CMakeCache.txt;cmake . -DCMAKE_INSTALL_PREFIX:PATH=/share/software/libarmadillo-10.2.0
+    make install
+oschreib@hpc1:~$ ls -dlart /share/apps/modulefiles/hpc/libarmadillo/*
+-rw-r--r-- 1 root root 307 Oct 28  2019 /share/apps/modulefiles/hpc/libarmadillo/9.800.1
+oschreib@hpc1:~$ ls /share/apps/src/armadillo
+armadillo-9.800.1  armadillo-9.800.1.tar.xz
+oschreib@hpc1:~$ ls /share/apps/libarmadillo-9.800.1
+include  lib  share
+oschreib@hpc1:~$ 

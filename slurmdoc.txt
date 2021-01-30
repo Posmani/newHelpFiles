@@ -1,0 +1,7 @@
+Slurm has very common commands with many offsite
+https://slurm.schedmd.com/documentation.html and the man pages
+and local guides:
+https://wiki.cse.ucdavis.edu/support/hpc/software/slurm
+https://github.com/ngs-docs/2021-GGG298/tree/latest/Week8-Slurm_and_Farm_cluster_for_doing_analysis
+
+https://www.shellcheck.net/

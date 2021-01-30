@@ -1,0 +1,8 @@
+git clone https://github.com/ngs-docs/2020-GGG298.git
+cd 2020-GGG298/Week7-Slurm_and_Farm_cluster_for_doing_analysis/assembly
+git pull 
+conda create -y -n assembly -c conda-forge -c bioconda prokka megahit snakemake-minimal
+bash assembly_megahit.slurm
+sbatch assembly_megahit.slurm
+
+oschreiber@barbera:~$ ls /afs/genomecenter.ucdavis.edu/core/rcc

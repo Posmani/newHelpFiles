@@ -1,0 +1,48 @@
+#adding user ashleybw to hpc2:
+
+id ashleybw
+grep ashleybw /etc/auto.home
+
+#(quad is my desktop)
+
+#Creating user in global `database':
+olivier@quad:~$ ssh -A -X oschreib@hpc2.engr.ucdavis.edu
+oschreib@hpc2:~$ ssh apo ?????????????????????not necessary
+oschreib@apo:~$ ~rf/hesiod/hesuser.sh ashleybw
+oschreib@apo:~$ ~rf/hesiod/hesuser.sh ashleybw |nsupdate -k ~rf/hesiod/h.k
+oschreib@apo:~$ hesinfo ashleybw passwd
+
+#setting up ashleybw' filessytem location:
+oschreib@apo:~$ cd /apo/share/oreillylab
+oschreib@apo:/apo/share/oreillylab$ sudo mkdir ashleybw
+oschreib@apo:/apo/share/oreillylab$ sudo chown ashleybw.ashleybw ashleybw
+#oschreib@apo:/apo/share/oreillylab$ sudo chown ashleybw ashleybw
+#oschreib@apo:/apo/share/oreillylab$ sudo chgrp ashleybw ashleybw
+
+#setting up ssh across nodes using puppet:
+oschreib@hpc2:~$ sudo su
+root@hpc2:/home/oschreib# vi /etc/puppetlabs/code/environments/production/data/common.yaml
+home
+root@hpc2:~# /opt/puppetlabs/bin/puppet agent -t
+root@hpc2:~# su - ashleybw
+ashleybw@hpc2:~$ ssh localhost
+ashleybw@hpc2:~$ logout
+root@hpc2:~# su - ashleybw
+ashleybw@hpc2:~$ cd .ssh
+ashleybw@hpc2:~/.ssh$ vi authorized_keys
+ashleybw@hpc2:~/.ssh$ chmod 644 authorized_keys
+
+#finalize user creation:
+root@apo:~# ./adduser.sh ashleybw oreillylab
+parallel-ssh -h
+
+#checking SLURM works for user
+oschreib@apo:~$ sudo su - ashleybw
+ashleybw@apo:~$ sbatch /home/rf/test.sbatch
+ashleybw@apo:~$ squeue
+
+Mail -s "Please ssh ashleybw@hpc2 " ashleybw@ucdavis.edu </dev/null 
+
+Put right requestor: NEWACCOUNTemailName@ucdavis.edu by:
+oschreib@soy:~$ rt correspond 604
+Notification.txt

@@ -1,0 +1,38 @@
+ldapsearch
+look up users for account creation wiki scripts
+https://wiki.cse.ucdavis.edu/cgi-bin/engr.pl
+
+oschreib@soy:~$ rt list
+   613        HPC1  3 day  3 day open   apthacker Cannot Access HPC1 Account    
+Ticket hpc-rt-613 is a new HPC1 account
+oschreib@soy:~$ rt take 613
+oschreib@soy:~$ rt show 613
+root@hpc1:~# getent passwd|egrep  NEWACCOUNT
+
+:1,$s/NEWACCOUNT/lsotelom/g
+:1,$s/ACCOUNTgrp/jkmasongrp/g
+#Cut and paste 2 curly brackets to:
+root@puppet4:/etc/puppetlabs/code/modules/user/manifests/virtual.pp 
+root@puppet4:~# cd /etc/puppetlabs/code/modules/autofs/files/hpc1.cse.ucdavis.edu 
+# insert: NEWACCOUNT -fstype=nfs,vers=4.0 nas-7-0:/export/ACCOUNTgrp/& in auto.home
+root@puppet4:/etc/puppetlabs/code/modules/autofs/files/hpc1.cse.ucdavis.edu# ./sedit.sh;cd
+
+#key:
+#Does not work: root@wiki:/tmp1/key# scp /tmp1/key/NEWACCOUNT.pub puppet4:/etc/puppetlabs/code/modules/ssh/files/users/
+#Three step process:
+olivier@quad:~/$ scp -i ~/.ssh/id_rsaUCDavisOlivierSchreiber.pem oschreib@wiki.cse.ucdavis.edu:/tmp1/key/NEWACCOUNT.pub /tmp/cskey
+olivier@quad:~/$ scp -i ~/.ssh/id_rsaUCDavisOlivierSchreiber.pem /tmp/cskey oschreib@puppet4.cse.ucdavis.edu:/tmp/;ls -latr /tmp;date
+root@puppet4:~# cp -v /tmp/cskey /etc/puppetlabs/code/modules/ssh/files/users/NEWACCOUNT.pub
+?olivier@quad:~/$ scp -i ~/.ssh/id_rsaUCDavisOlivierSchreiber.pem /tmp/cskey oschreib@hpc1.engr.ucdavis.edu:/tmp/
+?root@hpc1:~# cp -v /tmp/cskey /etc/ssh/users/NEWACCOUNT.pub
+
+root@hpc1:~# ssh nas-7-0
+root@nas-7-0.hpc1:~# mkdir /export/ACCOUNTgrp/NEWACCOUNT; chown XXXXXX.XXXXXX  /export/ACCOUNTgrp/NEWACCOUNT
+root@nas-7-0.hpc1:~# /opt/puppetlabs/bin/puppet agent -t 
+root@nas-7-0.hpc1:~# sacctmgr -i add user NEWACCOUNT defaultaccount=ACCOUNTgrp partition=low,med,high cluster=HPC1
+root@nas-7-0.hpc1:~# sacctmgr -i modify user where account=ACCOUNTgrp partition=low  set qos=ACCOUNTgrpm
+root@nas-7-0.hpc1:~# sacctmgr -i modify user where account=ACCOUNTgrp partition=med  set qos=ACCOUNTgrpm
+root@nas-7-0.hpc1:~# sacctmgr -i modify user where account=ACCOUNTgrp partition=high  set qos=ACCOUNTgrph
+#Put right requestor: NEWACCOUNTemailName@ucdavis.edu by:
+oschreib@soy:~$ rt correspond 604
+Notification.txt

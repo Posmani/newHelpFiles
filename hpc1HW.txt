@@ -1,0 +1,30 @@
+root@hpc1:~# shead /opt/csetools/bin/psol.sh ?
+
+root@hpc1:~# sinfo
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+low          up   infinite      8 drain* c5-[13,27],c6-[21,29,32],c7-37,c8-19,g8-1
+med          up   infinite      8 drain* c5-[13,27],c6-[21,29,32],c7-37,c8-19,g8-1
+high*        up   infinite      7 drain* c5-[13,27],c6-[21,29,32],c7-37,c8-19
+[...]
+root@hpc1:~# /tmp/nodes.pl --drain 2>&1|egrep -i "DOWN|DRAIN"
+[...]
+          c5-27 |               DOWN*+DRAIN | No route to host [oschreib@2021-01-20T13:10:44]
+[...]
+root@hpc1:~# ssh shead /opt/csetools/bin/bon c5-27
+enabling netboot on c5-27
+root@hpc1:~# ping m5-27
+64 bytes from m5-27.hpc1.cse.ucdavis.edu (10.21.15.27): icmp_seq=2 ttl=64 time=11.1 ms
+[...]
+root@hpc1:~# /opt/csetools/bin/preset c5-27
+Turning on c5-27 using m5-27
+Chassis Power Control: Reset
+oot@hpc1:~# ipmitool -U admin -P admin -H m5-27 chassis power status
+Get Session Challenge command failed
+Error: Unable to establish LAN session
+Error: Unable to establish IPMI v1.5 / RMCP session
+root@hpc1:~# ping c5-27
+root@hpc1:~# ping c5-27
+PING c5-27.hpc1.cse.ucdavis.edu (10.21.5.27) 56(84) bytes of data.
+From hpc1.cse.ucdavis.edu (10.21.7.10) icmp_seq=1 Destination Host Unreachable
+[...]
+

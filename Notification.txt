@@ -1,0 +1,15 @@
+ Hi,
+ Your hpc2 account has been created.
+ Please type in your MobaXterm, putty or other terminal:
+ ssh wdlynch@hpc2.engr.ucdavis.edu
+ If you get prompted for `password', type CTRL C, cut above *command* with output
+ and paste into email (instead of screenshot)
+ Then, insert -vvv after ssh and cut *command* with output and paste into email:
+ Then, cut following *command* with output and paste into email:
+ ls -latrR .ssh
+ It is fine to have a single pair of keys for many hosts--all in .ssh
+ Thanks!
+ --
+ |Olivier Schreiber | Systems Administrator |
+ |High Performance Computing Core Facility | University of California, Davis |
+

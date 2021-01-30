@@ -1,0 +1,17 @@
+help@cse.ucdavis.edu
+https://github.com/RILAB/lab-docs/wiki/Using-Farm
+https://drive.google.com/drive/u/1/folders/0AOxwOgmmZwzbUk9PVA
+https://docs.google.com/document/d/1v2DhQdtq6-uYXtdLYTqI1V4nmeILywEE7HLoQDcf7PY/edit
+https://github.com/ngs-docs/2021-GGG298/tree/latest/Week8-Slurm_and_Farm_cluster_for_doing_analysis
+https://www.dokuwiki.org/dokuwiki
+https://wiki.cse.ucdavis.edu/support:hpc
+https://wiki.cse.ucdavis.edu/farm_guide
+https://wiki.cse.ucdavis.edu/support/systems/hpc1
+https://wiki.cse.ucdavis.edu/support/general/security/putty
+https://wiki.cse.ucdavis.edu/support/general/security/ssh
+https://wiki.cse.ucdavis.edu/support/hpc/software/slurm
+
+http://ssg.cs.ucdavis.edu/services/research/hpc1-cluster
+
+https://www.shellcheck.net/
+https://modules.readthedocs.io/en/latest/FAQ.html
