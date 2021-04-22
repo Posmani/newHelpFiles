@@ -1,0 +1,85 @@
+>>And MPI would always win vs OpenMP.
+>: Does it mean that Intel MPI is always faster than OpenMP?
+OpenMP is *not* another MPI (Message Passing or Distributed Memory Parallel) library but a Shared
+Memory Parallel library.
+Some explanations
+A)Solvers like OpenFOAM are parallel processing capable using Shared Memory Parallel (SMP)
+and/or Distributed Memory Parallel (DMP) parallelization libraries.
+B)Underlying Hardware and Software Notions
+It is important to distinguish hardware components of a system and the actual computations being
+performed using them. On the hardware side, one can identify:
+1. Cores, the Central Processing Units (CPU) capable of arithmetic operations.
+2. Processors, the four, six, eight and up core socket-mounted devices.
+3. Nodes, the hosts associated with one network interface and address.
+With current technology, nodes are implemented on boards in a chassis or blade rack-mounted enclosure.
+The board may comprise two sockets or more.
+From the software side, one can identify:
+1. Processes: execution streams having their own address space.
+2. Threads: execution streams sharing address space with other threads.
+Therefore, it is important to note that processes and threads created to compute a solution on a
+system will be deployed in different ways on the underlying nodes through the processors and cores’
+hardware hierarchy.
+C)Parallelism Background
+Parallelism in scientific/technical computing exists in two paradigms implemented separately but
+sometimes combined in ‘hybrid’ codes: Shared Memory Parallelism (SMP) appeared in the 1980’s with
+the strip mining of ‘DO loops’ and subroutine spawning via memory-sharing threads.
+In this paradigm, parallel efficiency is affected by the relative importance of arithmetic operations
+versus data access referred to as ‘DO loop granularity.’
+In the late 1990’s, Distributed Memory Parallelism (DMP) Processing was introduced and proved very
+suitable for performance gains because of its coarser grain parallelism design. It consolidated on the
+MPI Application Programming Interface. In the meantime, SMP saw adjunction of mathematical libraries
+already parallelized using efficient implementation through Open Multi-Processing (OpenMP TM )
+and Pthreads standard API’s.
+Both DMP and SMP (with some limitations) programs can be run on the two commonly available types of
+hardware systems:
+• Shared Memory systems or single nodes with multiple cores sharing a single memory address space and
+a Single instance of the operating system.
+• Distributed Memory systems, otherwise known as clusters, comprised of nodes with separate local
+memory address spaces and a dedicated instance of the operating system per node.
+Note: SMP programs because of their single memory spaces cannot execute across clusters. Inversely,
+DMP programs can run perfectly well on a Shared Memory system. Since DMP has coarser granularity than
+SMP, it is therefore preferable, on a Shared Memory system, to run DMP rather than SMP despite what
+the names may imply at first glance. SMP and DMP processing may be combined together, in what is
+called ‘hybrid mode’.
+D)Distributed Memory Parallel Implementations
+DMP is implemented through the problem at hand with domain decomposition. Depending on the physics
+involved in their respective industry, the domains could be geometry, finite elements, matrix,
+frequency, load cases or right hand side of an implicit method. Parallel inefficiency from
+communication costs is affected by the boundaries created by the partitioning. Load balancing is also
+important so that all MPI processes perform the same number of computations during the solution and
+therefore finish at the same time. Deployment of the MPI processes across the computing resources
+can be adapted to each architecture with ‘rank’ or ‘round-robin’ allocation.
+E)Parallelism Metrics
+Amdahl’s Law, ‘Speedup yielded by increasing the number of parallel processes of a program is bounded
+by the inverse of its sequential fraction’ is also expressed by the following formula
+(where P is the program portion that can be made parallel, 1-P is its serial complement and N is the
+number of processes applied to the computation):
+Amdahl Speedup=1/[(1-P)+P/N]
+A derived metric is: Efficiency=Amdahl Speedup/N
+A trend can already be deduced by the empirical fact that the parallelizable fraction of an
+application depends more on CPU speed, and the serial part, comprising of overhead tasks depends more
+on RAM speed or I/O bandwidth. Therefore, an application running on a higher CPU speed system will
+have a larger 1-P serial part and a smaller P parallel part causing its Amdahl Speedup to decrease.
+This can lead to a misleading assessment of different hardware configurations as shown by this example
+where, say System B has faster CPU speed than System A:
+N System A elapsed seconds System B elapsed seconds
+1 	1000 				810
+10 	100 				90
+Speedup 10 				9
+System A and System B could show parallel speedups of 10 and 9, respectively, even though System B has
+faster raw performance across the board. Normalizing speedups with the slowest system serial time
+remedies this problem:
+Speedup 10 				11.11
+A computational solution of a particular dataset is said to exhibit strong scalability if elapsed
+execution time decreases when number of processors increases. While computational solution of
+increasing dataset sizes is said to exhibit weak scalability when elapsed execution time can remain
+bounded through an increase of number of processors.
+It may be preferable, in the end, to use a throughput metric, especially if several jobs are running
+simultaneously on a system:
+Number of jobs/hour/system = 3600/(Job elapsed time)
+The system could be a chassis, rack, blade, or any hardware provisioned as a whole unit.
+
+Thanks
+--
+|Olivier Schreiber | Systems Administrator |
+|High Performance Computing Core Facility | University of California, Davis |
