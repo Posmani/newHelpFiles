@@ -36,3 +36,8 @@ root@nas-7-0.hpc1:~# sacctmgr -i modify user where account=ACCOUNTgrp partition=
 #Put right requestor: NEWACCOUNTemailName@ucdavis.edu by:
 oschreib@soy:~$ rt correspond 604
 Notification.txt
+
+
+Don't forget to restart the slurmctld
+systemctl restart slurmctld ; systemctl status slurmctld
+
