@@ -46,3 +46,11 @@ Mail -s "Please ssh ashleybw@hpc2 " ashleybw@ucdavis.edu </dev/null
 Put right requestor: NEWACCOUNTemailName@ucdavis.edu by:
 oschreib@soy:~$ rt correspond 604
 Notification.txt
+
+
+________________________________________________________
+.ssh directory permissions should look like:
+drwx------  2 posmani posmani     6 Feb 23 20:16 .ssh
+
+you can change it via - chmod 700 .ssh
+and - chmod 644 authorized_keys
